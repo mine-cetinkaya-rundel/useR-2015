@@ -52,6 +52,7 @@ intro stat classroom
 
 - [OpenIntro](https://www.openintro.org/stat/labs.php) for R labs
 - [My github repo](https://github.com/mine-cetinkaya-rundel) for 
-specific course details + materials for Sta 101 at Duke (course 
+specific course details + materials for Sta 101 at Duke. Course 
 repos usually start with `sta101_` or `sta104_`, latter is the 
-online version of the course)
+online version of the course. Each semester is a new repo, 
+there's lots of duplication between semesters.
