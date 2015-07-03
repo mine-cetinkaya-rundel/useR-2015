@@ -1,0 +1,127 @@
+---
+title: "Are you politically informed?"
+author: "[Student name]"
+output:
+  html_document:
+    fig_height: 2.75
+    fig_width: 4
+    highlight: pygments
+    theme: cerulean
+---
+
+```{r echo=FALSE}
+library(downloader)
+```
+
+```{r echo=FALSE}
+pol <- read.csv("DATA.csv")
+```
+
+
+### Part 1 - Introduction:
+
+The purpose of this porject is to analyze if a relationship exists between age and how informed one is about politics. Specifically, the project examines the relationship of the two variables by comparing the average age among groups with differing levels of political information.
+
+We are interested in this relationship to determine how our own level of political knowledge, given our age, relates to different ages. The general public should care about this relationship because it could provide insight into which people are more politically informed. A relationship between age and how informed one is could cause politicians to reevaluate their target audience. 
+
+### Part 2 - Data:
+
+The data was collected from the General Social Survey (GSS). The GSS is conducted by surveying people 18 years or older in face to face interviews. The people are chosen by randomly selected(sampled) households. The interviewers block for age,race,gender, etc. There is chance of sample biases mainly due to "not-at-homes." However, in order to reduce this bias, the interviewers only operate after 3:00 p.m. on weekdays or during the weekend or holidays. The GSS has been running biannually since 1972, however my data is only focused on the year 2012. The cases in this study are 634 randomly sample adults who gave definitive answers to both questions of focus. I left out those who responded with "I don't know."
+  
+The explanatory variable for this study is "level of political knowledge". It is determined by answering the question: how informed are you about politics? The variable is a categorical ordinal variable with three assigned levels. The levels are not/barely informed, kind of informed, and very informed. The response variable for this study is age. The variable is a numerical discrete variable because it is measured in full years. The observations range from 18-89 years old. 
+  
+This study is an observational study. This is because there was no behavioral change that would effect the response. I am strictly comparing two variables and examining their relationship. No treatment is being done.
+
+The GSS survey is meant to produce data that can be generalized to the entire population of the US. Since this is randomly sampled, and the observations are independent of each other, it is fair to assume that we can generalize the findings the the entire population. However, since this is simply an observational study we can not assume that there is casual link between the variables. 
+
+### Part 3 - Exploratory data analysis:
+
+In this section I found summary statistics for my explanatory variable, level of political knowledge. To do so I used the "summary" function in R studio, however I had to alter my variables first.
+
+Since my explanatory variable is a categorical ordinal variable, it is expressed with ascending numbers according to the level. The data was too spread out among the levels, with some levels having 0 representation, so I re-leveled them. The re-leveling put the original 5 levels into three levels(1,2,3).
+  
+```{r}
+pol$POLEFY15[pol$POLEFY15 %in% c(1, 2)] = 1
+pol$POLEFY15[pol$POLEFY15 == 3] = 2
+pol$POLEFY15[pol$POLEFY15 %in% c(4, 5)] = 3
+```
+
+I then wanted to change the representation from numerical to categorical, so I made a new variable called pol$info and changed the level names to the corresponding level of how one would answer the question,"how politically knowledgeable are you?" The the three levels are "not/barely," "kind of," and "very". 
+
+To examine the data graphically I used the plot function. The graph below shows the distribution of data among the three levels of political knowledge. "kind of" had the most observations, while "not/barely" and "very" were pretty similar
+  
+```{r}
+pol$info = NA
+pol$info[pol$POLEFY15 == 1] = "not/barely"
+pol$info[pol$POLEFY15 == 2] = "kind of"
+pol$info[pol$POLEFY15 == 3] = "very"
+pol$info = factor(pol$info,levels = c("not/barely", "kind of", "very"))
+
+plot(pol$info)
+```
+
+I wanted to visualize the data side by side, so I used the box plot command to create side by side box plots. By looking at this plot, I can see that the medians of each level are fairly similar, but different. The highest median is "very" and the lowest is "not/barely". I also can see the IQR of the data. "not/barely" has the largest IGR, but they all have very similar Q3s. The box plot also tells me the range of all values in each level. It appears that they all have the same range(max-min).
+
+```{r}
+boxplot(pol$AGE ~ pol$info)
+```
+
+In order to analyze the different level groups statistically, I created three new variables of subsets from pol$info using the "subset" function. The three variables are called "barely," "kindof," and "very".
+```{r}
+barely <- subset(pol, pol$info == "not/barely")
+kindof <- subset(pol, pol$info == "kind of")
+very <- subset(pol, pol$info == "very")
+```
+
+With these new variables I used the summary function for each to find the mean, median, and IQR of the ages. And I used the "sd" function to find the standard deviation of ages in each group
+    
+```{r}
+summary(barely$AGE)
+sd(barely$AGE)
+summary(kindof$AGE)
+sd(kindof$AGE)
+summary(very$AGE)
+sd(very$AGE)
+```
+
+By analyzing the exploratory data, it is fair to assume that there is a slight relationship between age and level of political knowledge. I can assume this because of the difference in means and medians from the summary statistics, as well as analyzing the two plots. While the exploratory data analysis might suggest a difference in means, we can not be sure. I must continue with data inference.
+
+### Part 4 - Inference:
+
+Since I am comparing many means, I use the ANOVA test: 
+
+The null hypothesis states that there is no difference in average age between the different levels of political knowledge, all are equal. The alternative hypothesis states that at least one of the mean ages is  different between the different levels of political knowledge.
+
+Conditions:
+1. Independence: the groups are not paired(independent), we can assume random sampling as mentioned in part 2, and the sample size is less than 10% of the population.
+2. Approximate Normality:the distributions for each group seem to be nearly normal, however, since our sample size is very large we can relax this condition.
+3. Equal Variance: By looking at the similarities in standard deviation and range of each grouping, we can assume that equal variance is met. 
+
+I needed to download the "inference" function to proceed with the hypothesis test:
+
+```{r}
+download("https://stat.duke.edu/~mc301/R/inference.RData", destfile = "inference.RData")
+load("inference.RData")
+
+inference(y = pol$AGE, x = pol$info, est = "mean", type = "ht", method = "theoretical", alternative = "greater")
+```
+
+By using the inference function, I was given an "F-value" of 2.97 which leads to a "p-value" of .05. To determine if the p-value is significant, we must calculate the significance level using the Bonferonni Correction:
+
+```{r}
+k = 3
+K = k*(k-1) / 2
+alpha = 0.05
+(alphastar = alpha / K)
+```
+
+Since the p-value of 0.05 is greater than the significance level, I fail to reject the null hypothesis. There is not convincing evidence of a difference in at least one mean from the others.      
+
+### Part 5 - Conclusion: 
+
+From my findings I learned that according to this data, there is not a significant difference in average age between the different levels of political knowledge. I learned the importance of data inference. By just examining the summary statistics and plotted data, I assumed that there was a clear difference in mean ages, however when I ran the ANOVA test there was not convincing evidence of such a difference. From doing this project, I learned how to apply my knowledge of ANOVA testing to a real world application. Even though I did not reject my null hypothesis, further research and testing should be done on this research question. The difference in this sample mean ages could suggest a significant difference with further testing. A larger sample size would bring more convincing evidence and could possibly result in a successful rejection of the null hypothesis. With a larger sample size, we would not have to re-level, thus our data set will be different and we could possibly have a different result. 
+
+### References:
+
+Data obtained from The General Social Survey(GSS)
+http://www3.norc.org/GSS+Website/
