@@ -1,4 +1,4 @@
-This repo contains slides and demo materials for the talk 
+This repo contains [slides](https://github.com/mine-cetinkaya-rundel/useR-2015/blob/master/r_studio_docker.pdf) and [demo materials](https://github.com/mine-cetinkaya-rundel/useR-2015/tree/master/demo) for the talk 
 titled "Using R, RStudio, and Docker for introductory 
 statistics" at [useR 2015](http://user2015.math.aau.dk/) 
 in Aalborg, Denmark.
