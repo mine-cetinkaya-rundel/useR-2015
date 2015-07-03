@@ -50,8 +50,8 @@ intro stat classroom
 
 ### Resources:
 
-    - [OpenIntro](https://www.openintro.org/) for R labs
-    - [My github repo](https://github.com/mine-cetinkaya-rundel) for 
-    specific course details + materials for Sta 101 at Duke (course 
-    repos usually start with `sta101_` or `sta104_`, latter is the 
-    online version of the course)
+- [OpenIntro](https://www.openintro.org/) for R labs
+- [My github repo](https://github.com/mine-cetinkaya-rundel) for 
+specific course details + materials for Sta 101 at Duke (course 
+repos usually start with `sta101_` or `sta104_`, latter is the 
+online version of the course)
