@@ -1,5 +1,7 @@
 # Using R, RStudio, and Docker for introductory statistics teaching
 
+## Revised title: R, RStudio, and Docker playing nice in the classroom
+
 Docker is a relatively new Linux container technology that can be used as a 
 lightweight form of virtualization. At Duke University we have been using 
 Docker containers to provide students with anywhere access to RStudio Server 
