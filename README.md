@@ -11,6 +11,7 @@ shoot me an [email](mailto:mine@stat.duke.edu).
 ### Why R?
 
 #### Why / why not R?
+
     - Why? Unlike many software designed specifically for
     intro stat courses, R is 
         - free & open source, 
@@ -31,6 +32,7 @@ shoot me an [email](mailto:mine@stat.duke.edu).
         - command line is intimidating: RStudio not so intimidating
 
 #### How R?
+
     - Technical:
         - Short story: use RStudio, in the browser, avoid local
         installation for seamless entry and minimized frustration
@@ -47,6 +49,7 @@ shoot me an [email](mailto:mine@stat.duke.edu).
         reproducible data analysis projects
 
 #### Resources:
+
     - [OpenIntro](https://www.openintro.org/) for R labs
     - [My github repo](https://github.com/mine-cetinkaya-rundel) for 
     specific course details + materials for Sta 101 at Duke (course 
