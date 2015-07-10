@@ -50,6 +50,7 @@ intro stat classroom
 
 ### Resources:
 
+- [GitHub repo for Docker implementation at duke](https://github.com/mccahill/docker-rstudio) - updates to the repo forthcoming
 - [OpenIntro](https://www.openintro.org/stat/labs.php) for R labs
 - [My github repo](https://github.com/mine-cetinkaya-rundel) for 
 specific course details + materials for Sta 101 at Duke. Course 
